@@ -1,3 +1,12 @@
+# Change your current GitHub account on your PC.
+## On Mac
+
+https://superuser.com/questions/1064197/how-to-switch-git-user-at-terminal
+
+## On Windows
+
+https://stackoverflow.com/questions/22844806/how-to-change-my-git-username-in-terminal
+
 # Guide Sign
 
 A mentor guide program for Mongolian students.
