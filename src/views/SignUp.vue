@@ -4,9 +4,8 @@
 
     <div class="sign-up-body">
       <div class="body-left">
-        <div>ALL</div>
-        <div>ABOUT</div>
-        <div>ME</div>
+        <div>AMSA</div>
+        <div>GUIDE</div>
       </div>
 
       <el-card class="body-right">
@@ -25,6 +24,9 @@
             placeholder="Password"
             @keyup.enter="signUp"
           />
+          <br />
+          <el-radio v-model="role" label="mentor">Mentor</el-radio>
+          <el-radio v-model="role" label="student">Student</el-radio>
           <br />
           <el-button @click="signUp" type="danger">SIGN UP</el-button>
         </form>
@@ -50,6 +52,7 @@ export default {
     return {
       email: "",
       password: "",
+      role: "mentor",
     };
   },
   methods: {
@@ -65,10 +68,12 @@ export default {
         .then(
           res => {
             const displayName = this.email.split("@")[0];
+            const role = this.role;
             const dbPromise = db
               .collection("aboutMe")
               .doc(res.user.uid)
               .set({
+                role: role,
                 displayName,
                 photoURL: "",
                 friendList: [],

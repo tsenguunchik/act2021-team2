@@ -3,9 +3,8 @@
     <Header />
     <div class="login-body">
       <div class="body-left">
-        <div>ALL</div>
-        <div>ABOUT</div>
-        <div>ME</div>
+        <div>AMSA</div>
+        <div>GUIDE</div>
       </div>
       <el-card class="body-right">
         <h3>Sign In</h3>

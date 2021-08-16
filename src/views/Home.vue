@@ -4,9 +4,8 @@
 
     <div class="hero">
       <div class="headline">
-        <div>ALL</div>
-        <div>ABOUT</div>
-        <div>ME</div>
+        <div>AMSA</div>
+        <div>GUIDE</div>
       </div>
       <img class="hero-img" src="../assets/hero-yoshi.png" alt="" />
     </div>
