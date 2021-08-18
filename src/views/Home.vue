@@ -11,7 +11,7 @@
     </div>
 
     <section class="users">
-      <h3>Most Recently Updated Profile Users</h3>
+      <h3>Mentors</h3>
 
       <div v-if="users">
         <router-link
@@ -59,15 +59,17 @@ export default {
     let db = firebase.firestore();
     let ref = db.collection("aboutMe");
     ref
-      .orderBy("lastUpdated", "desc")
-      .limit(9)
+      .where("role", "==", "mentor")
       .get()
-      .then(snapshot => {
-        this.users = snapshot.docs.map(doc => ({
+      .then((querySnapshot) => {
+        this.users = querySnapshot.docs.map(doc => ({
           uid: doc.id,
           friendList: [],
           ...doc.data(),
         }));
+      })
+      .catch((error) => {
+        console.log("Error getting documents: ", error);
       });
   },
 };
