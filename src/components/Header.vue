@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <router-link to="/">
-      <h1>All About Me</h1>
+      <h1>Amsa Guide</h1>
     </router-link>
 
     <div class="right" v-if="!user.loading">
