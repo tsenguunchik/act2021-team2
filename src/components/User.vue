@@ -130,7 +130,7 @@
       <div id="friend-list" class="section content-friendList">
         <div class="friendList-upDown">
           <div class="friendList-up">
-            <h2>Friend List</h2>
+            <h2>Friend Lists</h2>
           </div>
           <div class="friendList-down">
             <router-link
