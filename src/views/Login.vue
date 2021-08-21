@@ -4,7 +4,7 @@
     <div class="login-body">
       <div class="body-left">
         <div>AMSA</div>
-        <div>GUIDE</div>
+        <div>GUIDE2</div>
       </div>
       <el-card class="body-right">
         <h3>Sign In</h3>
