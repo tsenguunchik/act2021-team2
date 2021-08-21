@@ -26,7 +26,7 @@
           class="menu-item menu-my-classes"
           @click="scrollTo('#my-classes')"
         >
-          My Classes
+          Specialties
         </button>
         <div class="menu-item-after menu-my-classes" />
         <div class="menu-item-before menu-future-goals" />
@@ -34,35 +34,14 @@
           class="menu-item menu-future-goals"
           @click="scrollTo('#future-goals')"
         >
-          Future Goals
+          Schedule
         </button>
         <div class="menu-item-after menu-future-goals" />
-        <div class="menu-item-before menu-fun-stuff" />
-        <button
-          class="menu-item menu-fun-stuff"
-          @click="scrollTo('#fun-stuff')"
-        >
-          Fun Stuff
-        </button>
-        <div class="menu-item-after menu-fun-stuff" />
-        <div class="menu-item-before menu-other-stuff" />
-        <button
-          class="menu-item menu-other-stuff"
-          @click="scrollTo('#other-stuff')"
-        >
-          Other Stuff
-        </button>
-        <div class="menu-item-after menu-other-stuff" />
-        <div class="menu-item-before menu-interesting-links" />
-        <button
-          class="menu-item menu-interesting-links"
-          @click="scrollTo('#interesting-links')"
-        >
-          Interesting Links
-        </button>
-        <div class="menu-item-after menu-interesting-links" />
         <div class="menu-item-before menu-comments" />
-        <button class="menu-item menu-comments" @click="scrollTo('#comments')">
+        <button
+          class="menu-item menu-comments"
+          @click="scrollTo('#comments')"
+        >
           Comments
         </button>
         <div class="menu-item-after menu-comments" />
@@ -130,7 +109,7 @@
       <div id="friend-list" class="section content-friendList">
         <div class="friendList-upDown">
           <div class="friendList-up">
-            <h2>Friend List</h2>
+            <h2>Friend Lists</h2>
           </div>
           <div class="friendList-down">
             <router-link
@@ -153,7 +132,7 @@
       <div id="my-classes" class="section content-myClass">
         <div class="myClass-upDown">
           <div class="myclass-up">
-            <h2>My Classes</h2>
+            <h2>Specialties</h2>
           </div>
           <div
             class="myclass-down"
@@ -168,7 +147,7 @@
       <div id="future-goals" class="section content-futureGoal">
         <div class="futureGoal-upDown">
           <div class="futrueGoal-up">
-            <h2>Future Goals</h2>
+            <h2>Schedule</h2>
           </div>
           <div
             class="futureGoal-down"
@@ -180,64 +159,6 @@
               </div>
               <br />
             </div>
-          </div>
-        </div>
-      </div>
-      <div id="fun-stuff" class="section content-funStuff">
-        <div class="funStuff-upDown">
-          <div class="funStuff-up">
-            <h2>Fun Stuff</h2>
-          </div>
-          <template v-if="data.funStuff">
-            <div
-              class="funStuff-down"
-              v-for="(fun, i) in data.funStuff"
-              :key="i"
-            >
-              <div class="funStuff-left" v-if="fun.imgUrl">
-                <div class="img-wrapper">
-                  <img :src="fun.imgUrl" alt="fun stuff image" />
-                </div>
-              </div>
-              <div
-                class="funStuff-right"
-                :style="i % 2 !== 0 ? 'order: -1' : ''"
-              >
-                {{ fun.text }}
-              </div>
-            </div>
-          </template>
-        </div>
-      </div>
-      <div id="other-stuff" class="section content-otherStuff">
-        <div class="otherStuff-upDown">
-          <div class="otherStuff-up">
-            <h2>Other Stuff</h2>
-          </div>
-          <div class="otherStuff-down" v-if="data.otherStuff">
-            <div>{{ data.otherStuff }}</div>
-          </div>
-        </div>
-      </div>
-      <div id="interesting-links" class="section content-interestingLinks">
-        <div class="link-upDown">
-          <div class="link-up">
-            <h2>Interesting Links</h2>
-          </div>
-          <div class="link-down" v-if="data.interestingLinks">
-            <a
-              class="link"
-              v-for="(c, i) in data.interestingLinks"
-              :key="i"
-              :href="
-                !c.startsWith('http://') && !c.startsWith('https://')
-                  ? `http://${c}`
-                  : c
-              "
-              target="_blank"
-            >
-              {{ c }}
-            </a>
           </div>
         </div>
       </div>
@@ -259,7 +180,7 @@
 
       <!-- <div v-for="i in [...Array(100)]" :key="i">content</div> -->
       <footer>
-        <p>2020 ® All Rights Reserved</p>
+        <p>2021 ® All Rights Reserved</p>
       </footer>
     </div>
   </div>
@@ -405,15 +326,6 @@ export default {
     }
     .menu-future-goals {
       background: lighten(#bace5c, $dark);
-    }
-    .menu-fun-stuff {
-      background: lighten(#80d49a, $dark);
-    }
-    .menu-other-stuff {
-      background: lighten(#65cfc8, $dark);
-    }
-    .menu-interesting-links {
-      background: lighten(#d8a8e7, $dark);
     }
     .menu-comments {
       background: lighten(#c7c1c1, $dark);
@@ -603,73 +515,6 @@ export default {
       border-left: 6px solid #bace5c;
       padding: 10px 30px;
       display: inline-block;
-      background: #ffbaba;
-      color: #000;
-      margin: 10px;
-      border-radius: 4px;
-    }
-  }
-
-  .content-funStuff {
-    border-left: 9px solid #80d49a;
-    .funStuff-down {
-      display: flex;
-      padding: 30px 28px;
-      align-items: center;
-      justify-content: center;
-    }
-    .funStuff-left {
-      flex: 0 0 300px;
-      transform: rotate(-7deg);
-      .img-wrapper {
-        border: 5px solid #80d49a;
-        transform: translate(-5px, 5px);
-        position: relative;
-        padding-top: 100%;
-      }
-      img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border: 5px solid #b9ebc9;
-        transform: translate(10px, -15px);
-      }
-    }
-    .funStuff-right {
-      // border-left: 6px solid #bace5c;
-      white-space: pre-wrap;
-      padding: 10px 30px;
-      display: inline-block;
-      background: #ffbaba;
-      color: #000;
-      margin: 10px;
-      border-radius: 4px;
-    }
-  }
-
-  .content-otherStuff {
-    border-left: 9px solid #65cfc8;
-    .otherStuff-down {
-      border-left: 6px solid #65cfc8;
-      padding: 10px 30px;
-      display: inline-block;
-      background: #ffbaba;
-      color: #000;
-      margin: 10px;
-      border-radius: 4px;
-    }
-  }
-
-  .content-interestingLinks {
-    border-left: 9px solid #d8a8e7;
-    //  #d2bcd5;
-    .link {
-      border-left: 6px solid #d8a8e7;
-      display: block;
-      padding: 10px 30px;
       background: #ffbaba;
       color: #000;
       margin: 10px;
