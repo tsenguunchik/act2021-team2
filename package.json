@@ -1,6 +1,6 @@
 {
-  "name": "spike",
-  "version": "0.1.0",
+  "name": "amsa-guide",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
