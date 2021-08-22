@@ -33,7 +33,7 @@
       </div>
     </section>
     <footer>
-      <p>2020 ® All Rights Reserved</p>
+      <p>2021 ® All Rights Reserved. Made with ❤</p>
     </footer>
   </div>
 </template>
@@ -61,14 +61,14 @@ export default {
     ref
       .where("role", "==", "mentor")
       .get()
-      .then((querySnapshot) => {
+      .then(querySnapshot => {
         this.users = querySnapshot.docs.map(doc => ({
           uid: doc.id,
           friendList: [],
           ...doc.data(),
         }));
       })
-      .catch((error) => {
+      .catch(error => {
         console.log("Error getting documents: ", error);
       });
   },

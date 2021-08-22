@@ -13,14 +13,14 @@
           About Me
         </button>
         <div class="menu-item-after menu-about-me" />
-        <div class="menu-item-before menu-friend-list" />
+        <div class="menu-item-before menu-event-list" />
         <button
-          class="menu-item menu-friend-list"
-          @click="scrollTo('#friend-list')"
+          class="menu-item menu-event-list"
+          @click="scrollTo('#event-list')"
         >
-          Friend List
+          Event List
         </button>
-        <div class="menu-item-after menu-friend-list" />
+        <div class="menu-item-after menu-event-list" />
         <div class="menu-item-before menu-my-classes" />
         <button
           class="menu-item menu-my-classes"
@@ -62,8 +62,8 @@
           v-if="
             loggedIn &&
               !isSelf &&
-              (!currentUserData.friendList ||
-                !currentUserData.friendList.includes(uid))
+              (!currentUserData.eventList ||
+                !currentUserData.eventList.includes(uid))
           "
           type="danger"
           round
@@ -74,8 +74,8 @@
           v-if="
             loggedIn &&
               !isSelf &&
-              currentUserData.friendList &&
-              currentUserData.friendList.includes(uid)
+              currentUserData.eventList &&
+              currentUserData.eventList.includes(uid)
           "
           type="info"
           plain
@@ -106,39 +106,44 @@
           </div>
         </div>
       </div>
-      <div id="friend-list" class="section content-friendList">
-        <div class="friendList-upDown">
-          <div class="friendList-up">
-            <h2>Friend Lists</h2>
+      <div id="event-list" class="section content-eventList">
+        <div class="eventList-upDown">
+          <div class="eventList-up">
+            <h2>Event Lists</h2>
           </div>
-          <div class="friendList-down">
-            <router-link
-              v-for="(fuid, i) in data.friendList"
-              :key="i"
-              :to="`/user/${fuid}`"
-              class="friend-tag"
-            >
-              <template v-if="friendData[fuid]">
-                <img
-                  :src="friendData[fuid].photoURL || defaultPhotoURL"
-                  alt="avatar"
-                />
-                <span>{{ friendData[fuid].displayName }}</span>
-              </template>
-            </router-link>
+          <div class="eventList-down">
+            <el-row :gutter="20">
+              <el-col :span="6" v-for="(o, index) in eventData" :key="o" :offset="index > 0 ? 1 : 0">
+                <el-card :body-style="{ padding: '4px' }">
+                  <div slot="header" class="clearfix">
+                    <span>Event name</span>
+                  </div>
+                  <div style="padding: 14px;">
+                    <p>When: {{o.date}}</p>
+                    <p>Created: {{o.createdBy}}</p>
+                    <div class="bottom clearfix">
+                      <time class="time">{{ currentDate }}</time>
+                      <el-button type="text" class="button">Approve</el-button>
+                      <el-button type="text" class="button">Deny</el-button>
+                    </div>
+                  </div>
+                </el-card>
+                <br>
+              </el-col>
+            </el-row>
           </div>
         </div>
       </div>
       <div id="my-classes" class="section content-myClass">
         <div class="myClass-upDown">
           <div class="myclass-up">
-            <h2>Specialties</h2>
+            <h2>Skills</h2>
           </div>
           <div
             class="myclass-down"
-            v-if="data.myClasses && data.myClasses.length"
+            v-if="data.skills && data.skills.length"
           >
-            <div class="class-tag" v-for="(c, i) in data.myClasses" :key="i">
+            <div class="class-tag" v-for="(c, i) in data.skills" :key="i">
               {{ c }}
             </div>
           </div>
@@ -180,7 +185,7 @@
 
       <!-- <div v-for="i in [...Array(100)]" :key="i">content</div> -->
       <footer>
-        <p>2021 ® All Rights Reserved</p>
+        <p>2021 ® All Rights Reserved. Made with ❤</p>
       </footer>
     </div>
   </div>
@@ -201,7 +206,38 @@ export default {
     return {
       defaultPhotoURL:
         "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
-      friendData: {},
+      eventData: {
+        Gb7EwpDbTzXJJnmiSLNN0Y8C8tm2: {
+          date: "2021/08/28",
+          time: "13:00",
+          createdBy: "Altangerel",
+          displayName: "test4"
+        },
+        JtR7FxoFGMhURvIio5qHPn1mhLk1: {
+          date: "2021/08/29",
+          time: "15:00",
+          createdBy: "Jamsrandorj",
+          displayName: "test4"
+        },
+        JtR7FxoFGMhURvIio5qHP1mhLk1: {
+          date: "2021/08/29",
+          time: "15:00",
+          createdBy: "Oyungerel",
+          displayName: "test4"
+        },
+        JtR7FxoFGMURvIio5qHPn1mhLk1: {
+          date: "2021/08/29",
+          time: "15:00",
+          createdBy: "Tuguldur",
+          displayName: "test4"
+        },
+        JtRFxoFGMhURvIio5qHPn1mhLk1: {
+          date: "2021/08/29",
+          time: "15:00",
+          createdBy: "Chimedregzen",
+          displayName: "test4"
+        },
+      },
     };
   },
   computed: {
@@ -210,9 +246,9 @@ export default {
     },
   },
   watch: {
-    "data.friendList": {
+    "data.eventList": {
       handler() {
-        this.fetchFriendList();
+        this.fetcheventList();
       },
       immediate: true,
       deep: true,
@@ -232,7 +268,7 @@ export default {
       db.collection("aboutMe")
         .doc(this.currentUser.uid)
         .update({
-          friendList: firebase.firestore.FieldValue.arrayUnion(this.uid),
+          eventList: firebase.firestore.FieldValue.arrayUnion(this.uid),
         })
         .then(() => {
           // console.log("add friend success");
@@ -249,7 +285,7 @@ export default {
       db.collection("aboutMe")
         .doc(this.currentUser.uid)
         .update({
-          friendList: firebase.firestore.FieldValue.arrayRemove(this.uid),
+          eventList: firebase.firestore.FieldValue.arrayRemove(this.uid),
         })
         .then(() => {
           // console.log("un-friend success");
@@ -259,18 +295,19 @@ export default {
           // console.error("Error when un-friend: " + err.message);
         });
     },
-    fetchFriendList() {
-      if (!this.data.friendList) return;
+    fetcheventList() {
+      // if (!this.data.eventList) return;
 
-      let db = firebase.firestore();
-      this.data.friendList.forEach(uid => {
-        let docRef = db.collection("aboutMe").doc(uid);
-        docRef.get().then(doc => {
-          if (doc.exists) {
-            this.$set(this.friendData, uid, doc.data());
-          }
-        });
-      });
+      // let db = firebase.firestore();
+      // this.data.eventList.forEach(uid => {
+      //   let docRef = db.collection("aboutMe").doc(uid);
+      //   docRef.get().then(doc => {
+      //     if (doc.exists) {
+      //       this.$set(this.friendData, uid, doc.data());
+      //     }
+      //   });
+      // });
+      console.log(this.friendData);
     },
   },
 };
@@ -318,7 +355,7 @@ export default {
     .menu-about-me {
       background: lighten(#f55066, $dark);
     }
-    .menu-friend-list {
+    .menu-event-list {
       background: lighten(#f78b7c, $dark);
     }
     .menu-my-classes {
@@ -467,7 +504,7 @@ export default {
     }
   }
 
-  .content-friendList {
+  .content-eventList {
     border-left: 9px solid #f78b7c;
     .friend-tag {
       display: inline-flex;
