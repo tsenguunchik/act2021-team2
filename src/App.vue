@@ -16,7 +16,7 @@
   }
 }
 body {
-  background: #ffbaba;
+  background: #fcfcfc;
   word-break: break-word;
 }
 </style>
