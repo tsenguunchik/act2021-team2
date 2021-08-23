@@ -141,7 +141,7 @@ export default {
       }
       &:hover {
         color: #fff;
-        background: #fc4c92;
+        background: #f3bfd4;
       }
       &.signUp {
         color: #fff;
