@@ -7,7 +7,7 @@
         <div>AMSA</div>
         <div>GUIDE</div>
       </div>
-      <img class="hero-img" src="../assets/hero-yoshi.png" alt="" />
+      <img class="hero-img" src="../assets/uni.jpg" alt="" />
     </div>
 
     <section class="users">
@@ -85,12 +85,12 @@ export default {
   overflow: hidden;
 }
 .hero-img {
-  width: 60%;
-  max-width: 800px;
+  width: 100%;
+///max-width: 800px;
   height: auto;
   object-fit: cover;
-  border: 10px solid #fff;
-  transform: rotate(7deg);
+///border: 10px solid #fff;
+///transform: rotate(7deg);
   flex: 0 1 auto;
   margin: 0 50px;
 }
@@ -98,11 +98,11 @@ export default {
   flex: 0 0 auto;
   margin: 20px 50px 50px;
   font-size: 100px;
-  color: #fc4c92;
+  color: #91bbfae8;
   font-family: Waiting for the Sunrise;
   font-weight: bold;
   text-align: center;
-  text-shadow: 0px 0px 0 rgb(232, 56, 126), -1px 0px 0 rgb(225, 49, 119),
+  text-shadow: 0px 0px 0 rgb(56, 232, 179), -1px 0px 0 rgb(225, 49, 119),
     -2px 0px 0 rgb(219, 43, 113), -3px 0px 0 rgb(213, 37, 107),
     -4px 0px 0 rgb(207, 31, 101), -5px 0px 0 rgb(200, 24, 94),
     -6px 0px 0 rgb(194, 18, 88), -7px 0px 0 rgb(188, 12, 82),
