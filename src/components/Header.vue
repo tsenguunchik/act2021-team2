@@ -1,7 +1,8 @@
 <template>
   <header class="header">
     <router-link to="/">
-      <h1>Amsa Guide</h1>
+      <img src="../assets/amsa.png" class="logo">
+      <!-- <h1>Amsa Guide</h1> -->
     </router-link>
 
     <div class="right" v-if="!user.loading">
@@ -72,7 +73,7 @@ export default {
 <style lang="scss" scoped>
 .header {
   height: 64px;
-  background: #fff;
+  background: #3F51B5;
   // #fdf2f0
   display: flex;
   justify-content: space-between;
@@ -89,6 +90,10 @@ export default {
     // font-family: "Carter One", cursive;
     text-shadow: 2px 2px 0px #fff, 5px 4px 0px rgba(0, 0, 0, 0.15);
   }
+}
+
+.logo {
+  width: 50px;
 }
 
 .right {
