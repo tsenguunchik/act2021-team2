@@ -21,7 +21,7 @@
           @uploaded="onUploadedAvatar"
         />
 
-        <h4>Dispaly Name</h4>
+        <h4>Display Name</h4>
         <div class="form-item">
           <el-input v-model="displayName" placeholder="Bucky Badger" />
           <el-button
@@ -102,11 +102,11 @@
               :imgUrl="form.aboutMeImgUrl"
               @uploaded="url => (form.aboutMeImgUrl = url)"
             />
-            <el-input type="textarea" :rows="8" v-model="form.aboutMe" />
+            <el-input placeholder="Bio" type="textarea" :rows="8" v-model="form.aboutMe" />
           </div>
 
           <!-- my class -->
-          <h4>My Classes</h4>
+          <h4>Specialties</h4>
           <div style="margin: -5px">
             <el-tag
               v-for="(c, i) in form.myClasses"
@@ -124,7 +124,7 @@
               v-model="newClass"
               ref="newClassInput"
               size="small"
-              placeholder="CS506"
+              placeholder="Physics"
               @keyup.enter.native="addClass"
               @blur="addClass"
               style="margin: 5px"
@@ -138,13 +138,13 @@
               @click="showClassInput"
               style="margin: 5px"
             >
-              + New Class
+              + New Specialty
             </el-button>
           </div>
           <!-- end: my class -->
 
           <!-- <future goal> -->
-          <h4>Future Goals</h4>
+          <h4>Schedule</h4>
           <div>
             <div
               v-for="(c, i) in form.futureGoals"
@@ -162,77 +162,12 @@
             </div>
             <el-input
               v-model="newGoal"
-              placeholder="Get A in CS506. (Press Enter to add a future goal)"
+              placeholder="Ex: Available every Monday from 10AM-11AM CT"
               @keyup.enter.native="addGoal"
               @blur="addGoal"
             />
           </div>
           <!-- <end: future goal> -->
-
-          <!-- <Fun Stuff> -->
-          <h4>Fun Stuff</h4>
-          <div class="fun-stuffs">
-            <div
-              class="fun-stuff form-item"
-              v-for="(fun, i) in form.funStuff"
-              :key="i"
-            >
-              <UploadImg
-                hint="Add Photo!"
-                :foldername="user.data.uid"
-                :resizeWidth="800"
-                :resizeHeight="800"
-                :width="250"
-                :height="250"
-                :imgUrl="fun.imgUrl"
-                @uploaded="url => (fun.imgUrl = url)"
-              />
-              <el-input type="textarea" :rows="6" v-model="fun.text" />
-              <el-button
-                type="danger"
-                icon="el-icon-delete"
-                circle
-                @click="removeFun(i)"
-              />
-            </div>
-            <el-button type="danger" plain size="small" @click="addFun">
-              + Add Fun Stuff
-            </el-button>
-          </div>
-          <!-- </End: Fun Stuff> -->
-
-          <!-- <Other Stuff> -->
-          <h4>Other Stuff</h4>
-          <el-input type="textarea" :rows="4" v-model="form.otherStuff" />
-          <div />
-          <!-- </End: Other Stuff> -->
-
-          <!-- <Interesting Links> -->
-          <h4>Interesting Links</h4>
-          <div>
-            <div
-              v-for="(c, i) in form.interestingLinks"
-              :key="i"
-              style="margin: 0 -5px"
-            >
-              <el-tag
-                closable
-                :disable-transitions="false"
-                @close="removeLink(i)"
-                type="success"
-              >
-                {{ c }}
-              </el-tag>
-            </div>
-            <el-input
-              v-model="newLink"
-              placeholder="Tell your fun story"
-              @keyup.enter.native="addLink"
-              @blur="addLink"
-            />
-          </div>
-          <!-- </End: Interesting Links> -->
-
           <div class="bottom-button">
             <el-button type="danger" @click="onSubmit">Save</el-button>
           </div>
@@ -467,25 +402,6 @@ export default {
     removeGoal(index) {
       this.form.futureGoals.splice(index, 1);
     },
-    addFun() {
-      this.form.funStuff.push({
-        text: "",
-        imgUrl: "",
-      });
-    },
-    removeFun(index) {
-      this.form.funStuff.splice(index, 1);
-    },
-    addLink() {
-      let newLink = this.newLink.trim();
-      if (newLink && !this.form.interestingLinks.includes(newLink)) {
-        this.form.interestingLinks.push(newLink);
-      }
-      this.newLink = "";
-    },
-    removeLink(index) {
-      this.form.interestingLinks.splice(index, 1);
-    },
     onSubmit() {
       console.log("submit!");
       let db = firebase.firestore();
@@ -566,11 +482,5 @@ h4 {
 }
 .el-textarea {
   font-size: 16px;
-}
-
-.fun-stuffs {
-  .fun-stuff {
-    margin-bottom: 1rem;
-  }
 }
 </style>

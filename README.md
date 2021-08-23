@@ -1,12 +1,6 @@
-# All-About-Me
+# Amsa Guide
 
-A Social Media Web App built with Vue.js, Firebase, Element-UI, Disqus, Vuex, Vue-Router, and Sass.
-
-## Online Demo
-
-https://bb-all-about-me.netlify.app/
-
-![screenshot](screenshot.png)
+Helps Mongolian students to connect with abroad Mongolian students and workers. And get some advices including wide range of topics.
 
 ## Project setup
 
@@ -31,7 +25,3 @@ npm run build
 ```
 npm run lint
 ```
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
