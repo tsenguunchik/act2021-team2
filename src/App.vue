@@ -16,7 +16,7 @@
   }
 }
 body {
-  background: #fcfcfc;
+  background-image: url('../src/assets/uni.jpg');
   word-break: break-word;
 }
 </style>

@@ -7,7 +7,7 @@
         <div>AMSA</div>
         <div>GUIDE</div>
       </div>
-      <img class="hero-img" src="../assets/uni.jpg" alt="" />
+      <!--img class="hero-img" src="../assets/uni.jpg" alt=""-->
     </div>
 
     <section class="users">
@@ -99,7 +99,7 @@ export default {
   margin: 20px 50px 50px;
   font-size: 100px;
   color: #91bbfae8;
-  font-family: Waiting for the Sunrise;
+  font-family: Product Sans;
   font-weight: bold;
   text-align: center;
   text-shadow: 0px 0px 0 rgb(56, 232, 179), -1px 0px 0 rgb(225, 49, 119),
