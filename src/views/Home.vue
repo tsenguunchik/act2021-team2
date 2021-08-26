@@ -23,11 +23,11 @@
           <img :src="user.photoURL || defaultPhotoURL" alt="avatar" />
           <div>
             <div class="name">{{ user.displayName }}</div>
-            <div>
+            <!-- <div>
               {{ user.friendList.length }} friend{{
                 user.friendList.length === 1 ? "" : "s"
               }}
-            </div>
+            </div> -->
           </div>
         </router-link>
       </div>
@@ -86,11 +86,11 @@ export default {
 }
 .hero-img {
   width: 100%;
-///max-width: 800px;
+  //max-width: 800px;
   height: auto;
   object-fit: cover;
-///border: 10px solid #fff;
-///transform: rotate(7deg);
+  //border: 10px solid #fff;
+  //transform: rotate(7deg);
   flex: 0 1 auto;
   margin: 0 50px;
 }

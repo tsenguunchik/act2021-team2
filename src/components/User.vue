@@ -38,10 +38,7 @@
         </button>
         <div class="menu-item-after menu-future-goals" />
         <div class="menu-item-before menu-comments" />
-        <button
-          class="menu-item menu-comments"
-          @click="scrollTo('#comments')"
-        >
+        <button class="menu-item menu-comments" @click="scrollTo('#comments')">
           Comments
         </button>
         <div class="menu-item-after menu-comments" />
@@ -67,8 +64,8 @@
           "
           type="danger"
           round
-          @click="onAddFriend"
-          >+ Add Friend</el-button
+          @click="dialogEventVisible = true"
+          >+ New Event</el-button
         >
         <el-button
           v-if="
@@ -122,7 +119,7 @@
                     <p>When: {{o.date}}</p>
                     <p>Created: {{o.createdBy}}</p>
                     <div class="bottom clearfix">
-                      <time class="time">{{ currentDate }}</time>
+                      <!-- <time class="time">{{ currentDate }}</time> -->
                       <el-button type="text" class="button">Approve</el-button>
                       <el-button type="text" class="button">Deny</el-button>
                     </div>
@@ -187,6 +184,24 @@
       <footer>
         <p>2021 ® All Rights Reserved. Made with ❤</p>
       </footer>
+
+      <el-dialog title="Shipping address" :visible.sync="dialogEventVisible">
+        <el-form :model="form">
+          <el-form-item label="Promotion name" :label-width="formLabelWidth">
+            <el-input v-model="form.name" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="Zones" :label-width="formLabelWidth">
+            <el-select v-model="form.region" placeholder="Please select a zone">
+              <el-option label="Zone No.1" value="shanghai"></el-option>
+              <el-option label="Zone No.2" value="beijing"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">Cancel</el-button>
+          <el-button type="primary" @click="dialogFormVisible = false">Confirm</el-button>
+        </span>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -238,6 +253,17 @@ export default {
           displayName: "test4"
         },
       },
+      dialogEventVisible: false,
+      form: {
+        name: '',
+        region: '',
+        date1: '',
+        date2: '',
+        delivery: false,
+        type: [],
+        resource: '',
+        desc: ''
+      },
     };
   },
   computed: {
@@ -278,6 +304,7 @@ export default {
           // console.error("Error when add friend: " + err.message);
         });
     },
+    onNewEvent() {},
     onUnfriend() {
       if (!this.loggedIn) return;
 

@@ -102,7 +102,12 @@
               :imgUrl="form.aboutMeImgUrl"
               @uploaded="url => (form.aboutMeImgUrl = url)"
             />
-            <el-input placeholder="Bio" type="textarea" :rows="8" v-model="form.aboutMe" />
+            <el-input
+              placeholder="Bio"
+              type="textarea"
+              :rows="8"
+              v-model="form.aboutMe"
+            />
           </div>
 
           <!-- my class -->
