@@ -99,7 +99,7 @@ export default {
   margin: 20px 50px 50px;
   font-size: 100px;
   color: #91bbfae8;
-  font-family: Waiting for the Sunrise;
+  //font-family: Waiting for the Sunrise;
   font-weight: bold;
   text-align: center;
   text-shadow: 0px 0px 0 rgb(56, 232, 179), -1px 0px 0 rgb(225, 49, 119),

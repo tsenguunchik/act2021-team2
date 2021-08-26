@@ -6,7 +6,7 @@
           <img :src="data.photoURL || defaultPhotoURL" alt="avatar" />
         </div>
       </div>
-      <div class="menu-item-after menu-item-top-after" />
+      <!-- <div class="menu-item-after menu-item-top-after" /> -->
       <div class="menu-bottom">
         <div class="menu-item-before menu-about-me" />
         <button class="menu-item menu-about-me" @click="scrollTo('#about-me')">
@@ -28,28 +28,28 @@
         >
           Specialties
         </button>
-        <div class="menu-item-after menu-my-classes" />
-        <div class="menu-item-before menu-future-goals" />
-        <button
+        <!-- <div class="menu-item-after menu-my-classes" /> -->
+        <!-- <div class="menu-item-before menu-future-goals" /> -->
+        <!-- <button
           class="menu-item menu-future-goals"
           @click="scrollTo('#future-goals')"
         >
           Schedule
-        </button>
-        <div class="menu-item-after menu-future-goals" />
-        <div class="menu-item-before menu-comments" />
-        <button class="menu-item menu-comments" @click="scrollTo('#comments')">
+        </button> -->
+        <!-- <div class="menu-item-after menu-future-goals" /> -->
+        <!-- <div class="menu-item-before menu-comments" /> -->
+        <!-- <button class="menu-item menu-comments" @click="scrollTo('#comments')">
           Comments
-        </button>
-        <div class="menu-item-after menu-comments" />
-        <div class="menu-item-bottom-block" />
+        </button> -->
+        <!-- <div class="menu-item-after menu-comments" /> -->
+        <!-- <div class="menu-item-bottom-block" /> -->
       </div>
     </div>
     <div id="content" class="content">
       <div class="toolbar">
         <el-button
           v-if="loggedIn && isSelf"
-          type="danger"
+          type="primary"
           round
           @click="() => $router.push('/setting')"
         >
@@ -62,7 +62,7 @@
               (!currentUserData.eventList ||
                 !currentUserData.eventList.includes(uid))
           "
-          type="danger"
+          type="primary"
           round
           @click="dialogEventVisible = true"
           >+ New Event</el-button
@@ -85,7 +85,7 @@
       <div id="about-me" class="content-aboutMe">
         <div class="aboutMe-upDown">
           <div class="aboutMe-down">
-            <div class="down-left">
+            <!-- <div class="down-left">
               <div class="img-wrapper">
                 <img
                   v-if="data.aboutMeImgUrl"
@@ -94,7 +94,7 @@
                 />
                 <img v-else src="../assets/keropi2.jpg" alt="profile image" />
               </div>
-            </div>
+            </div> -->
             <div class="down-right" v-if="data">
               <h2>Hi, I'm {{ data.displayName ? data.displayName : "..." }}</h2>
               <div v-if="data.aboutMe">{{ data.aboutMe }}</div>
@@ -164,7 +164,7 @@
           </div>
         </div>
       </div>
-      <div id="comments" class="section content-comments">
+      <!-- <div id="comments" class="section content-comments">
         <div class="comments-upDown">
           <div class="comments-up">
             <h2>Comments</h2>
@@ -178,7 +178,7 @@
             />
           </div>
         </div>
-      </div>
+      </div> -->
 
       <!-- <div v-for="i in [...Array(100)]" :key="i">content</div> -->
       <footer>
@@ -360,7 +360,7 @@ export default {
   .menu-top {
     padding: 20px;
     text-align: left;
-    background: #fca9d0;
+    background: #fff;
     border-bottom-right-radius: 50px;
     .profile-wrapper {
       border-radius: 50%;
@@ -474,7 +474,7 @@ export default {
       font-size: 22px;
       // font-family: "Carter One", cursive;
       // font-family: "Leckerli One", cursive;
-      font-family: "McLaren", cursive;
+      // font-family: "McLaren", cursive;
     }
   }
 
@@ -520,13 +520,13 @@ export default {
       min-height: 200px;
       max-height: 300px;
       line-height: 1.5;
-      font-family: "Kalam", cursive;
+      //font-family: "Kalam", cursive;
       font-size: 20px;
       h2 {
         margin: 0 0 14px;
         font-size: 36px;
-        color: #ff037b;
-        font-family: "Gaegu", cursive;
+        color: #0B4EDD;
+        //font-family: "Gaegu", cursive;
       }
     }
   }
@@ -567,7 +567,7 @@ export default {
         color: #000;
         margin: 10px;
         border-radius: 4px;
-        font-family: "Boogaloo", cursive;
+        //font-family: "Boogaloo", cursive;
         font-size: 20px;
       }
     }

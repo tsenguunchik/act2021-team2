@@ -25,7 +25,7 @@
         <div class="form-item">
           <el-input v-model="displayName" placeholder="Bucky Badger" />
           <el-button
-            type="danger"
+            type="primary"
             @click="onSubmitDisplayName"
             :disabled="
               displayName.trim() === user.data.displayName ||
@@ -44,7 +44,7 @@
             placeholder="bucky.badger@wisc.edu"
           />
           <el-button
-            type="danger"
+            type="primary"
             @click="onSubmitEmail"
             :disabled="email.trim() === user.data.email || !email.trim()"
           >
@@ -71,7 +71,7 @@
           />
           <el-button
             @click="onSubmitPassword"
-            type="danger"
+            type="primary"
             :disabled="
               !currentPassword ||
                 !newPassword ||
@@ -91,7 +91,7 @@
         <div>
           <h4>About Me</h4>
           <div class="form-item">
-            <UploadImg
+            <!-- <UploadImg
               hint="upload/change About Me photo!"
               :foldername="user.data.uid"
               filename="aboutme.png"
@@ -101,7 +101,7 @@
               :height="280"
               :imgUrl="form.aboutMeImgUrl"
               @uploaded="url => (form.aboutMeImgUrl = url)"
-            />
+            /> -->
             <el-input
               placeholder="Bio"
               type="textarea"
@@ -119,7 +119,7 @@
               closable
               :disable-transitions="false"
               @close="removeClass(i)"
-              type="danger"
+              type="primary"
             >
               {{ c }}
             </el-tag>
@@ -174,7 +174,7 @@
           </div>
           <!-- <end: future goal> -->
           <div class="bottom-button">
-            <el-button type="danger" @click="onSubmit">Save</el-button>
+            <el-button type="primary" @click="onSubmit">Save</el-button>
           </div>
         </div>
       </el-card>
