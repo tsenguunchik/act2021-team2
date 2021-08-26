@@ -23,6 +23,7 @@
           <img :src="user.photoURL || defaultPhotoURL" alt="avatar" />
           <div>
             <div class="name">{{ user.displayName }}</div>
+            <div>{{ user.futureGoals[0] }}</div>
             <!-- <div>
               {{ user.friendList.length }} friend{{
                 user.friendList.length === 1 ? "" : "s"
@@ -155,6 +156,7 @@ section {
 footer {
   background: #f1ccb8;
   text-align: center;
+  bottom: 0;
   p {
     padding: 6px 0;
     line-height: 20px;
@@ -165,7 +167,6 @@ footer {
 .home {
   background-image: url('../../src/assets/uni.jpg');
   background-repeat: no-repeat;
-  background-size: auto;
-  background-size: 100% 100%;
+  background-attachment: fixed;
 }
 </style>
