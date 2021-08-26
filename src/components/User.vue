@@ -6,7 +6,7 @@
           <img :src="data.photoURL || defaultPhotoURL" alt="avatar" />
         </div>
       </div>
-      <div class="menu-item-after menu-item-top-after" />
+      <!-- <div class="menu-item-after menu-item-top-after" /> -->
       <div class="menu-bottom">
         <div class="menu-item-before menu-about-me" />
         <button class="menu-item menu-about-me" @click="scrollTo('#about-me')">
@@ -28,31 +28,28 @@
         >
           Specialties
         </button>
-        <div class="menu-item-after menu-my-classes" />
-        <div class="menu-item-before menu-future-goals" />
-        <button
+        <!-- <div class="menu-item-after menu-my-classes" /> -->
+        <!-- <div class="menu-item-before menu-future-goals" /> -->
+        <!-- <button
           class="menu-item menu-future-goals"
           @click="scrollTo('#future-goals')"
         >
           Schedule
-        </button>
-        <div class="menu-item-after menu-future-goals" />
-        <div class="menu-item-before menu-comments" />
-        <button
-          class="menu-item menu-comments"
-          @click="scrollTo('#comments')"
-        >
+        </button> -->
+        <!-- <div class="menu-item-after menu-future-goals" /> -->
+        <!-- <div class="menu-item-before menu-comments" /> -->
+        <!-- <button class="menu-item menu-comments" @click="scrollTo('#comments')">
           Comments
-        </button>
-        <div class="menu-item-after menu-comments" />
-        <div class="menu-item-bottom-block" />
+        </button> -->
+        <!-- <div class="menu-item-after menu-comments" /> -->
+        <!-- <div class="menu-item-bottom-block" /> -->
       </div>
     </div>
     <div id="content" class="content">
       <div class="toolbar">
         <el-button
           v-if="loggedIn && isSelf"
-          type="danger"
+          type="primary"
           round
           @click="() => $router.push('/setting')"
         >
@@ -65,10 +62,10 @@
               (!currentUserData.eventList ||
                 !currentUserData.eventList.includes(uid))
           "
-          type="danger"
+          type="primary"
           round
-          @click="onAddFriend"
-          >+ Add Friend</el-button
+          @click="dialogEventVisible = true"
+          >+ New Event</el-button
         >
         <el-button
           v-if="
@@ -88,7 +85,7 @@
       <div id="about-me" class="content-aboutMe">
         <div class="aboutMe-upDown">
           <div class="aboutMe-down">
-            <div class="down-left">
+            <!-- <div class="down-left">
               <div class="img-wrapper">
                 <img
                   v-if="data.aboutMeImgUrl"
@@ -97,7 +94,7 @@
                 />
                 <img v-else src="../assets/keropi2.jpg" alt="profile image" />
               </div>
-            </div>
+            </div> -->
             <div class="down-right" v-if="data">
               <h2>Hi, I'm {{ data.displayName ? data.displayName : "..." }}</h2>
               <div v-if="data.aboutMe">{{ data.aboutMe }}</div>
@@ -122,7 +119,7 @@
                     <p>When: {{o.date}}</p>
                     <p>Created: {{o.createdBy}}</p>
                     <div class="bottom clearfix">
-                      <time class="time">{{ currentDate }}</time>
+                      <!-- <time class="time">{{ currentDate }}</time> -->
                       <el-button type="text" class="button">Approve</el-button>
                       <el-button type="text" class="button">Deny</el-button>
                     </div>
@@ -167,7 +164,7 @@
           </div>
         </div>
       </div>
-      <div id="comments" class="section content-comments">
+      <!-- <div id="comments" class="section content-comments">
         <div class="comments-upDown">
           <div class="comments-up">
             <h2>Comments</h2>
@@ -181,12 +178,30 @@
             />
           </div>
         </div>
-      </div>
+      </div> -->
 
       <!-- <div v-for="i in [...Array(100)]" :key="i">content</div> -->
       <footer>
         <p>2021 ® All Rights Reserved. Made with ❤</p>
       </footer>
+
+      <el-dialog title="Shipping address" :visible.sync="dialogEventVisible">
+        <el-form :model="form">
+          <el-form-item label="Promotion name" :label-width="formLabelWidth">
+            <el-input v-model="form.name" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="Zones" :label-width="formLabelWidth">
+            <el-select v-model="form.region" placeholder="Please select a zone">
+              <el-option label="Zone No.1" value="shanghai"></el-option>
+              <el-option label="Zone No.2" value="beijing"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">Cancel</el-button>
+          <el-button type="primary" @click="dialogFormVisible = false">Confirm</el-button>
+        </span>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -238,6 +253,17 @@ export default {
           displayName: "test4"
         },
       },
+      dialogEventVisible: false,
+      form: {
+        name: '',
+        region: '',
+        date1: '',
+        date2: '',
+        delivery: false,
+        type: [],
+        resource: '',
+        desc: ''
+      },
     };
   },
   computed: {
@@ -278,6 +304,7 @@ export default {
           // console.error("Error when add friend: " + err.message);
         });
     },
+    onNewEvent() {},
     onUnfriend() {
       if (!this.loggedIn) return;
 
@@ -333,7 +360,7 @@ export default {
   .menu-top {
     padding: 20px;
     text-align: left;
-    background: #fca9d0;
+    background: #fff;
     border-bottom-right-radius: 50px;
     .profile-wrapper {
       border-radius: 50%;
@@ -447,7 +474,7 @@ export default {
       font-size: 22px;
       // font-family: "Carter One", cursive;
       // font-family: "Leckerli One", cursive;
-      font-family: "McLaren", cursive;
+      // font-family: "McLaren", cursive;
     }
   }
 
@@ -493,13 +520,13 @@ export default {
       min-height: 200px;
       max-height: 300px;
       line-height: 1.5;
-      font-family: "Kalam", cursive;
+      //font-family: "Kalam", cursive;
       font-size: 20px;
       h2 {
         margin: 0 0 14px;
         font-size: 36px;
-        color: #ff037b;
-        font-family: "Gaegu", cursive;
+        color: #0B4EDD;
+        //font-family: "Gaegu", cursive;
       }
     }
   }
@@ -540,7 +567,7 @@ export default {
         color: #000;
         margin: 10px;
         border-radius: 4px;
-        font-family: "Boogaloo", cursive;
+        //font-family: "Boogaloo", cursive;
         font-size: 20px;
       }
     }
