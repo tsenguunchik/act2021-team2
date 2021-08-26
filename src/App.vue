@@ -16,7 +16,7 @@
   }
 }
 body {
-  background-image: url('../src/assets/uni.jpg');
+  // background-image: url('../src/assets/uni.jpg');
   background-repeat: no-repeat;
   background-size: auto;
   background-size: 100% 100%;

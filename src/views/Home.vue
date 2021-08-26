@@ -97,8 +97,8 @@ export default {
 .headline {
   flex: 0 0 auto;
   margin: 20px 50px 50px;
-  font-size: 100px;
-  color: #91bbfae8;
+  font-size: 30px;
+  color: #000;
   //font-family: Waiting for the Sunrise;
   font-weight: bold;
   text-align: center;
@@ -160,5 +160,12 @@ footer {
     line-height: 20px;
     margin: 0;
   }
+}
+
+.home {
+  background-image: url('../../src/assets/uni.jpg');
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-size: 100% 100%;
 }
 </style>
