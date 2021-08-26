@@ -4,10 +4,10 @@
 
     <div class="hero">
       <div class="headline">
-        <div>AMSA</div>
-        <div>GUIDE</div>
+        <div>Amsa-guide.online wants to guide you to the prestige universities in the States</div>
+        <div>powered by Amsa</div>
       </div>
-      <img class="hero-img" src="../assets/uni.jpg" alt="" />
+      <!--img class="hero-img" src="../assets/uni.jpg" alt=""-->
     </div>
 
     <section class="users">
@@ -102,15 +102,9 @@ export default {
   //font-family: Waiting for the Sunrise;
   font-weight: bold;
   text-align: center;
-  text-shadow: 0px 0px 0 rgb(56, 232, 179), -1px 0px 0 rgb(225, 49, 119),
-    -2px 0px 0 rgb(219, 43, 113), -3px 0px 0 rgb(213, 37, 107),
-    -4px 0px 0 rgb(207, 31, 101), -5px 0px 0 rgb(200, 24, 94),
-    -6px 0px 0 rgb(194, 18, 88), -7px 0px 0 rgb(188, 12, 82),
-    -8px 0px 0 rgb(181, 5, 75), -9px 0px 0 rgb(175, -1, 69),
-    -10px 0px 0 rgb(169, -7, 63), -11px 0px 10px rgba(51, 51, 51, 0.52),
-    -11px 0px 1px rgba(51, 51, 51, 0.5), 0px 0px 10px rgba(51, 51, 51, 0.2);
+  text-shadow: 2px 2px #fdfcfc;
   div {
-    transform: rotate(-8deg);
+    ///transform: rotate(-8deg);
     &:not(:last-child) {
       margin-bottom: 18px;
     }
