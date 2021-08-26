@@ -2,8 +2,8 @@
   <header class="header">
     <router-link to="/">
       <img src="../assets/amsa.png" class="logo">
-      <!-- <h1>Amsa Guide</h1> -->
     </router-link>
+    <h1>Amsa Guide</h1>
 
     <div class="right" v-if="!user.loading">
       <div class="logged-in" v-if="user.loggedIn">
@@ -85,10 +85,10 @@ export default {
   }
   h1 {
     margin: 0;
-    color: #fc4c92;
-    font-family: "Architects Daughter", cursive;
+    color: #fff;
+    //font-family: "Architects Daughter", cursive;
     // font-family: "Carter One", cursive;
-    text-shadow: 2px 2px 0px #fff, 5px 4px 0px rgba(0, 0, 0, 0.15);
+    // text-shadow: 2px 2px 0px #fff, 5px 4px 0px rgba(0, 0, 0, 0.15);
   }
 }
 
@@ -113,6 +113,7 @@ export default {
       background: #eee;
     }
     .name {
+      color: #fff;
       margin: 10px;
       font-size: 18px;
       font-weight: bold;
