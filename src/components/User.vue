@@ -116,13 +116,14 @@
                     <span>Event name</span>
                   </div>
                   <div style="padding: 14px;">
-                    <p>When: {{o.date}}</p>
+                    <p>When: {{o.avTime}}</p>
                     <p>Created: {{o.createdBy}}</p>
                     <div class="bottom clearfix">
                       <!-- <time class="time">{{ currentDate }}</time> -->
-                      <el-button type="text" class="button">Approve</el-button>
-                      <el-button type="text" class="button">Deny</el-button>
+                      <el-button type="text" class="button" v-if="o.status=='pending'" @click="updateEvent(o, 'approved')">Approve</el-button>
+                      <el-button type="text" class="button" v-if="o.status=='pending'" @click="updateEvent(o, 'denied')">Deny</el-button>
                     </div>
+                    <p v-if="o.status!='pending'">Status: {{o.status}}</p>
                   </div>
                 </el-card>
                 <br>
@@ -138,9 +139,9 @@
           </div>
           <div
             class="myclass-down"
-            v-if="data.skills && data.skills.length"
+            v-if="data.myClasses && data.myClasses.length"
           >
-            <div class="class-tag" v-for="(c, i) in data.skills" :key="i">
+            <div class="class-tag" v-for="(c, i) in data.myClasses" :key="i">
               {{ c }}
             </div>
           </div>
@@ -185,21 +186,20 @@
         <p>2021 ® All Rights Reserved. Made with ❤</p>
       </footer>
 
-      <el-dialog title="Shipping address" :visible.sync="dialogEventVisible">
+      <el-dialog title="Event Request" :visible.sync="dialogEventVisible">
         <el-form :model="form">
-          <el-form-item label="Promotion name" :label-width="formLabelWidth">
+          <el-form-item label="Reason">
             <el-input v-model="form.name" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="Zones" :label-width="formLabelWidth">
-            <el-select v-model="form.region" placeholder="Please select a zone">
-              <el-option label="Zone No.1" value="shanghai"></el-option>
-              <el-option label="Zone No.2" value="beijing"></el-option>
+          <el-form-item label="Date">
+            <el-select v-model="form.region" placeholder="Please select date">
+              <el-option label="Available every Saturday 20:00-21:00" value="Available every Saturday 20:00-21:00"></el-option>
             </el-select>
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">Cancel</el-button>
-          <el-button type="primary" @click="dialogFormVisible = false">Confirm</el-button>
+          <el-button @click="dialogEventVisible = false">Cancel</el-button>
+          <el-button type="primary" @click="onAddFriend()">Confirm</el-button>
         </span>
       </el-dialog>
     </div>
@@ -208,7 +208,14 @@
 
 <script>
 import firebase from "firebase";
+import { mapGetters } from "vuex";
 export default {
+  // computed: {
+  //   ...mapGetters({
+  //     user: "user",
+  //     userData: "userData",
+  //   }),
+  // },  
   props: {
     data: Object,
     loggedIn: Boolean,
@@ -221,38 +228,39 @@ export default {
     return {
       defaultPhotoURL:
         "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
-      eventData: {
-        Gb7EwpDbTzXJJnmiSLNN0Y8C8tm2: {
-          date: "2021/08/28",
-          time: "13:00",
-          createdBy: "Altangerel",
-          displayName: "test4"
-        },
-        JtR7FxoFGMhURvIio5qHPn1mhLk1: {
-          date: "2021/08/29",
-          time: "15:00",
-          createdBy: "Jamsrandorj",
-          displayName: "test4"
-        },
-        JtR7FxoFGMhURvIio5qHP1mhLk1: {
-          date: "2021/08/29",
-          time: "15:00",
-          createdBy: "Oyungerel",
-          displayName: "test4"
-        },
-        JtR7FxoFGMURvIio5qHPn1mhLk1: {
-          date: "2021/08/29",
-          time: "15:00",
-          createdBy: "Tuguldur",
-          displayName: "test4"
-        },
-        JtRFxoFGMhURvIio5qHPn1mhLk1: {
-          date: "2021/08/29",
-          time: "15:00",
-          createdBy: "Chimedregzen",
-          displayName: "test4"
-        },
-      },
+      // eventData: {
+      //   Gb7EwpDbTzXJJnmiSLNN0Y8C8tm2: {
+      //     date: "2021/08/28",
+      //     time: "13:00",
+      //     createdBy: "Altangerel",
+      //     displayName: "test4"
+      //   },
+      //   JtR7FxoFGMhURvIio5qHPn1mhLk1: {
+      //     date: "2021/08/29",
+      //     time: "15:00",
+      //     createdBy: "Jamsrandorj",
+      //     displayName: "test4"
+      //   },
+      //   JtR7FxoFGMhURvIio5qHP1mhLk1: {
+      //     date: "2021/08/29",
+      //     time: "15:00",
+      //     createdBy: "Oyungerel",
+      //     displayName: "test4"
+      //   },
+      //   JtR7FxoFGMURvIio5qHPn1mhLk1: {
+      //     date: "2021/08/29",
+      //     time: "15:00",
+      //     createdBy: "Tuguldur",
+      //     displayName: "test4"
+      //   },
+      //   JtRFxoFGMhURvIio5qHPn1mhLk1: {
+      //     date: "2021/08/29",
+      //     time: "15:00",
+      //     createdBy: "Chimedregzen",
+      //     displayName: "test4"
+      //   },
+      // },
+      eventData: [],
       dialogEventVisible: false,
       form: {
         name: '',
@@ -264,12 +272,23 @@ export default {
         resource: '',
         desc: ''
       },
+      eventList: true,
+      allEvents: [],
     };
+  },
+  mounted() {
+    this.getAllEvents();
+    console.log(this.eventData);
   },
   computed: {
     currentURL() {
       return window.location.href;
     },
+    ...mapGetters({
+      user: "user",
+      userData: "userData",
+      // eventData: "eventData",
+    }),
   },
   watch: {
     "data.eventList": {
@@ -289,22 +308,77 @@ export default {
     },
     onAddFriend() {
       if (!this.loggedIn) return;
-
       let db = firebase.firestore();
+      var date = new Date();
+      var event = {
+        eventID: date.toISOString(),
+        mentorID: this.uid,
+        studentID: this.user.data.uid,
+        text: this.form.name,
+        avTime: this.form.region,
+        status: "pending",
+      };
+
       db.collection("aboutMe")
         .doc(this.currentUser.uid)
         .update({
-          eventList: firebase.firestore.FieldValue.arrayUnion(this.uid),
+          eventList: firebase.firestore.FieldValue.arrayUnion(event),
         })
         .then(() => {
           // console.log("add friend success");
-          this.$store.dispatch("fetchUserData");
+          this.$store.dispatch("fetchEventData");
         })
         .catch(() => {
           // console.error("Error when add friend: " + err.message);
         });
     },
-    onNewEvent() {},
+    //TODO - new event confirm clicked, updateEvents()
+    //TODO - new event student name awah
+    //TODO - event name = eventID.split("T")
+    updateEvent(event, status) {
+      if (!this.loggedIn) return;
+
+      let db = firebase.firestore();
+      event.status = status;
+      // var event = {
+      //   mentorID: this.uid,
+      //   studentID: this.user.data.uid,
+      //   text: this.form.name,
+      //   avTime: this.form.region,
+      //   status: "pending",
+      // };
+      db.collection("aboutMe")
+        .doc(this.currentUser.uid)
+        .get()
+        .then((x) => {
+          var currentEvents = x.data().eventList;
+          currentEvents.filter(k => k.eventID == event.eventID);
+          for (var i in currentEvents) {
+            if (currentEvents[i].eventID == event.eventID) {
+                currentEvents[i].status = status;
+                break; //Stop this loop, we found it!
+            }
+          }
+          db.collection("aboutMe")
+            .doc(this.currentUser.uid)
+            .update({
+              eventList: currentEvents,
+            })
+            .then(() => {
+              // console.log("add friend success");
+              this.$store.dispatch("fetchEventData");
+            })
+            .catch(() => {
+              // console.error("Error when add friend: " + err.message);
+            });
+          this.$store.dispatch("fetchEventData");
+        })
+        .catch(() => {
+          // console.error("Error when add friend: " + err.message);
+        });
+
+      
+    },
     onUnfriend() {
       if (!this.loggedIn) return;
 
@@ -323,18 +397,61 @@ export default {
         });
     },
     fetcheventList() {
-      // if (!this.data.eventList) return;
+      if (!this.data.eventList) return;
 
-      // let db = firebase.firestore();
-      // this.data.eventList.forEach(uid => {
-      //   let docRef = db.collection("aboutMe").doc(uid);
-      //   docRef.get().then(doc => {
-      //     if (doc.exists) {
-      //       this.$set(this.friendData, uid, doc.data());
-      //     }
-      //   });
-      // });
-      console.log(this.friendData);
+      let db = firebase.firestore();
+      this.data.eventList.forEach(uid => {
+        let docRef = db.collection("aboutMe").doc(uid);
+        docRef.get().then(doc => {
+          if (doc.exists) {
+            this.$set(this.friendData, uid, doc.data());
+          }
+        });
+      });
+      console.log(this.eventList);
+    },
+    getAllEvents() {
+      console.log("test");
+      let db = firebase.firestore();
+      let ref = db.collection("aboutMe");
+
+      // const docRef = doc(db, "aboutMe");
+      // const citiesRef = collection(db, "aboutMe");
+      // const docSnap = getDoc(docRef);
+      // console.log(citiesRef);
+
+      // if (docSnap.exists()) {
+      //   console.log("Document data:", docSnap.data());
+      // } else {
+      //   // doc.data() will be undefined in this case
+      //   console.log("No such document!");
+      // }
+      console.log(this.data);
+      console.log(this.eventData);
+      
+      ref
+        .get()
+        .then(querySnapshot => {
+          // this.allEvents = querySnapshot.docs.map(doc => (
+          //   doc.eventList
+          // ));
+          console.log("event entered");
+          querySnapshot.docs.forEach(x => {
+            var temp = x.data();
+            if(temp.eventList){
+              this.eventData = [...this.eventData, ...temp.eventList];
+            }
+            console.log(x.data())
+          });
+          // console.log(querySnapshot.docs.map(doc => (
+          //   doc.eventList
+          // )));
+        })
+        .catch(error => {
+          console.log("Error getting documents: ", error);
+        });
+
+      // console.log(allEvents);
     },
   },
 };
