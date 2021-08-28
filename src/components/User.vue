@@ -10,7 +10,8 @@
       <div class="menu-bottom">
         <div class="menu-item-before menu-about-me" />
         <button class="menu-item menu-about-me" @click="scrollTo('#about-me')">
-          About Me
+          <div v-if="uid==user.data.uid">About Me</div>
+          <div v-if="uid!=user.data.uid">About Mentor</div>
         </button>
         <div class="menu-item-after menu-about-me" />
         <div class="menu-item-before menu-event-list" />
@@ -113,17 +114,18 @@
               <el-col :span="6" v-for="(o, index) in eventData" :key="o" :offset="index > 0 ? 1 : 0">
                 <el-card :body-style="{ padding: '4px' }">
                   <div slot="header" class="clearfix">
-                    <span>Event name</span>
+                    <span>{{o.eventDate.split('T')[0]}}</span>
                   </div>
                   <div style="padding: 14px;">
-                    <p>When: {{o.avTime}}</p>
                     <p>Created: {{o.createdBy}}</p>
+                    <p>Status: {{o.status}}</p>
+                    <p>{{o.text}}</p>
+                    <a v-if="o.status=='approved'" :href="o.eventLink" target="_blank">Go to meeting</a>
                     <div class="bottom clearfix">
                       <!-- <time class="time">{{ currentDate }}</time> -->
-                      <el-button type="text" class="button" v-if="o.status=='pending'" @click="updateEvent(o, 'approved')">Approve</el-button>
-                      <el-button type="text" class="button" v-if="o.status=='pending'" @click="updateEvent(o, 'denied')">Deny</el-button>
+                      <el-button type="text" class="button" v-if="o.status=='pending' && o.mentorID==user.data.uid" @click="updateEvent(o, 'approved')">Approve</el-button>
+                      <el-button type="text" class="button" v-if="o.status=='pending' && o.mentorID==user.data.uid" @click="updateEvent(o, 'denied')">Deny</el-button>
                     </div>
-                    <p v-if="o.status!='pending'">Status: {{o.status}}</p>
                   </div>
                 </el-card>
                 <br>
@@ -199,7 +201,7 @@
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="dialogEventVisible = false">Cancel</el-button>
-          <el-button type="primary" @click="onAddFriend()">Confirm</el-button>
+          <el-button type="primary" @click="onAddEvent()">Confirm</el-button>
         </span>
       </el-dialog>
     </div>
@@ -306,10 +308,12 @@ export default {
         offset: -40,
       });
     },
-    onAddFriend() {
+    onAddEvent() {
       if (!this.loggedIn) return;
       let db = firebase.firestore();
       var date = new Date();
+      var date2 = new Date();
+      date2.setDate(date.getDate() + 7);
       var event = {
         eventID: date.toISOString(),
         mentorID: this.uid,
@@ -317,6 +321,9 @@ export default {
         text: this.form.name,
         avTime: this.form.region,
         status: "pending",
+        eventLink: "https://meet.google.com/ekh-bhjg-fxo",
+        eventDate: date2.toISOString(),
+        createdBy: this.user.data.displayName,
       };
 
       db.collection("aboutMe")
@@ -327,28 +334,28 @@ export default {
         .then(() => {
           // console.log("add friend success");
           this.$store.dispatch("fetchEventData");
+          this.getAllEvents();
+          this.dialogEventVisible = false;
         })
         .catch(() => {
           // console.error("Error when add friend: " + err.message);
         });
+
+      
     },
-    //TODO - new event confirm clicked, updateEvents()
-    //TODO - new event student name awah
-    //TODO - event name = eventID.split("T")
+    //TODO - footer door stick hiih ***
+    //TODO - event card goy yanzlah (like unread comments section) ***
+    //TODO - textinput to textarea with at least 3 rows ***
+    //TODO - change date dropdown to just text ***
+    //TODO - date picker oruulah, value-g ni eventDate-d hadgalah (nice to have)
+
     updateEvent(event, status) {
       if (!this.loggedIn) return;
 
       let db = firebase.firestore();
       event.status = status;
-      // var event = {
-      //   mentorID: this.uid,
-      //   studentID: this.user.data.uid,
-      //   text: this.form.name,
-      //   avTime: this.form.region,
-      //   status: "pending",
-      // };
       db.collection("aboutMe")
-        .doc(this.currentUser.uid)
+        .doc(event.studentID)
         .get()
         .then((x) => {
           var currentEvents = x.data().eventList;
@@ -360,7 +367,7 @@ export default {
             }
           }
           db.collection("aboutMe")
-            .doc(this.currentUser.uid)
+            .doc(event.studentID)
             .update({
               eventList: currentEvents,
             })

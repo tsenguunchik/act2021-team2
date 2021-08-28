@@ -56,6 +56,13 @@ export default {
   },
   data() {
     return {
+      appTitle: 'Awesome App',
+      sidebar: false,
+      menuItems: [
+        { title: 'Home', path: '/home', icon: 'home' },
+        { title: 'Sign Up', path: '/signup', icon: 'face' },
+        { title: 'Sign In', path: '/signin', icon: 'lock_open' }
+      ],
       defaultPhotoURL:
         "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
       users: [],
@@ -172,6 +179,7 @@ footer {
 .home {
   background-image: url('../../src/assets/uni.jpg');
   background-repeat: no-repeat;
-  background-attachment: fixed;
+  // background-attachment: fixed;
+  background-size: 100% 100%;
 }
 </style>
