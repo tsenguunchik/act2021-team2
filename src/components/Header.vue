@@ -132,11 +132,11 @@ export default {
   }
   .visiter {
     a {
-      color: #fc4c92;
+      color: #409EFF;
       background: #fff;
       padding: 9px 12px;
       border-radius: 4px;
-      border: 1px solid #fc4c92;
+      border: 1px solid #409EFF;
       font-size: 16px;
       line-height: 16px;
       transition: all 0.3s;
@@ -147,14 +147,14 @@ export default {
       }
       &:hover {
         color: #fff;
-        background: #f3bfd4;
+        background: #9fcfff;
       }
       &.signUp {
         color: #fff;
-        background: #fc4c92;
+        background: #409EFF;
         border-color: transparent;
         &:hover {
-          background: #ff76ad;
+          background: #70b8ff;
         }
       }
     }

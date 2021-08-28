@@ -1,38 +1,8 @@
 <template>
   <div class="home">
     <Header />
-
-    <div class="hero">
-      <div class="headline">
-        <div>Amsa-guide.online wants to guide you to the prestige universities in the States</div>
-        <div>powered by Amsa</div>
-      </div>
-      <!--img class="hero-img" src="../assets/uni.jpg" alt=""-->
-    </div>
-
-    <section class="users">
-      <h3>Mentors</h3>
-
-      <div v-if="users">
-        <router-link
-          v-for="user in users"
-          :key="user.uid"
-          :to="`/user/${user.uid}`"
-          class="user-card"
-        >
-          <img :src="user.photoURL || defaultPhotoURL" alt="avatar" />
-          <div>
-            <div class="name">{{ user.displayName }}</div>
-            <div>{{ user.futureGoals[0] }}</div>
-            <!-- <div>
-              {{ user.friendList.length }} friend{{
-                user.friendList.length === 1 ? "" : "s"
-              }}
-            </div> -->
-          </div>
-        </router-link>
-      </div>
-    </section>
+    <img alt="404" 
+     src="https://illustatus.herokuapp.com/?title=Oops,%20Page%20not%20found&fill=%234f86ed"/>    
     <footer>
       <p>2021 ® All Rights Reserved. Made with ❤</p>
     </footer>
@@ -56,13 +26,6 @@ export default {
   },
   data() {
     return {
-      appTitle: 'Awesome App',
-      sidebar: false,
-      menuItems: [
-        { title: 'Home', path: '/home', icon: 'home' },
-        { title: 'Sign Up', path: '/signup', icon: 'face' },
-        { title: 'Sign In', path: '/signin', icon: 'lock_open' }
-      ],
       defaultPhotoURL:
         "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
       users: [],
@@ -177,9 +140,8 @@ footer {
 }
 
 .home {
-  background-image: url('../../src/assets/uni.jpg');
+  background-image: url('../../src/assets/bricks.png');
   background-repeat: no-repeat;
-  // background-attachment: fixed;
-  background-size: 100% 100%;
+  background-attachment: fixed;
 }
 </style>
