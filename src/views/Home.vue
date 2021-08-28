@@ -10,7 +10,7 @@
       <!--img class="hero-img" src="../assets/uni.jpg" alt=""-->
     </div>
 
-    <section class="users" v-if="user.loggedIn">
+    <section class="users">
       <h3>Mentors</h3>
 
       <div v-if="users">
