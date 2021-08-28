@@ -12,6 +12,7 @@ export default new Vuex.Store({
       data: null,
     },
     userData: null,
+    eventData: [],
   },
   getters: {
     user(state) {
@@ -31,6 +32,9 @@ export default new Vuex.Store({
     },
     SET_USER_DATA(state, data) {
       state.userData = data;
+    },
+    SET_EVENT_DATA(state, data) {
+      state.eventData = data;
     },
   },
   actions: {
@@ -54,9 +58,26 @@ export default new Vuex.Store({
 
       let db = firebase.firestore();
       let docRef = db.collection("aboutMe").doc(state.user.data.uid);
+      let event = db.collection("aboutMe");
       docRef.get().then(doc => {
         if (doc.exists) {
           commit("SET_USER_DATA", doc.data());
+        }
+      });
+      event.get().then(doc => {
+        if (doc.exists) {
+          console.log(doc.data());
+          commit("SET_EVENT_DATA", doc.data());
+        }
+      });
+    },
+    fetchEventData({ commit }) {
+      let db = firebase.firestore();
+      let event = db.collection("aboutMe");
+      event.get().then(doc => {
+        if (doc.exists) {
+          console.log(doc.data());
+          commit("SET_EVENT_DATA", doc.data());
         }
       });
     },

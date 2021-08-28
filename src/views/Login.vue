@@ -2,10 +2,6 @@
   <div class="login">
     <Header />
     <div class="login-body">
-      <div class="body-left">
-        <div>AMSA</div>
-        <div>GUIDE2</div>
-      </div>
       <el-card class="body-right">
         <h3>Sign In</h3>
         <input
@@ -22,7 +18,7 @@
           @keyup.enter="login"
         />
         <br />
-        <el-button @click="login" type="danger" plain>LOGIN</el-button>
+        <el-button @click="login" type="primary" plain>LOGIN</el-button>
         <span>
           Don't have an account?
           <router-link to="/sign-up">Sign Up</router-link>
@@ -76,8 +72,8 @@ export default {
 .body-left {
   margin-right: 200px;
   font-size: 100px;
-  color: #fc4c92;
-  font-family: Waiting for the Sunrise;
+  color: #E94331;
+  //font-family: Waiting for the Sunrise;
   font-weight: bold;
   text-shadow: 0px 0px 0 rgb(232, 56, 126), -1px 0px 0 rgb(225, 49, 119),
     -2px 0px 0 rgb(219, 43, 113), -3px 0px 0 rgb(213, 37, 107),

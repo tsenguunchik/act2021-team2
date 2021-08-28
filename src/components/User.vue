@@ -6,11 +6,12 @@
           <img :src="data.photoURL || defaultPhotoURL" alt="avatar" />
         </div>
       </div>
-      <div class="menu-item-after menu-item-top-after" />
+      <!-- <div class="menu-item-after menu-item-top-after" /> -->
       <div class="menu-bottom">
         <div class="menu-item-before menu-about-me" />
         <button class="menu-item menu-about-me" @click="scrollTo('#about-me')">
-          About Me
+          <div v-if="uid==user.data.uid">About Me</div>
+          <div v-if="uid!=user.data.uid">About Mentor</div>
         </button>
         <div class="menu-item-after menu-about-me" />
         <div class="menu-item-before menu-event-list" />
@@ -28,31 +29,28 @@
         >
           Specialties
         </button>
-        <div class="menu-item-after menu-my-classes" />
-        <div class="menu-item-before menu-future-goals" />
-        <button
+        <!-- <div class="menu-item-after menu-my-classes" /> -->
+        <!-- <div class="menu-item-before menu-future-goals" /> -->
+        <!-- <button
           class="menu-item menu-future-goals"
           @click="scrollTo('#future-goals')"
         >
           Schedule
-        </button>
-        <div class="menu-item-after menu-future-goals" />
-        <div class="menu-item-before menu-comments" />
-        <button
-          class="menu-item menu-comments"
-          @click="scrollTo('#comments')"
-        >
+        </button> -->
+        <!-- <div class="menu-item-after menu-future-goals" /> -->
+        <!-- <div class="menu-item-before menu-comments" /> -->
+        <!-- <button class="menu-item menu-comments" @click="scrollTo('#comments')">
           Comments
-        </button>
-        <div class="menu-item-after menu-comments" />
-        <div class="menu-item-bottom-block" />
+        </button> -->
+        <!-- <div class="menu-item-after menu-comments" /> -->
+        <!-- <div class="menu-item-bottom-block" /> -->
       </div>
     </div>
     <div id="content" class="content">
       <div class="toolbar">
         <el-button
           v-if="loggedIn && isSelf"
-          type="danger"
+          type="primary"
           round
           @click="() => $router.push('/setting')"
         >
@@ -65,10 +63,10 @@
               (!currentUserData.eventList ||
                 !currentUserData.eventList.includes(uid))
           "
-          type="danger"
+          type="primary"
           round
-          @click="onAddFriend"
-          >+ Add Friend</el-button
+          @click="dialogEventVisible = true"
+          >+ New Event</el-button
         >
         <el-button
           v-if="
@@ -88,7 +86,7 @@
       <div id="about-me" class="content-aboutMe">
         <div class="aboutMe-upDown">
           <div class="aboutMe-down">
-            <div class="down-left">
+            <!-- <div class="down-left">
               <div class="img-wrapper">
                 <img
                   v-if="data.aboutMeImgUrl"
@@ -97,7 +95,7 @@
                 />
                 <img v-else src="../assets/keropi2.jpg" alt="profile image" />
               </div>
-            </div>
+            </div> -->
             <div class="down-right" v-if="data">
               <h2>Hi, I'm {{ data.displayName ? data.displayName : "..." }}</h2>
               <div v-if="data.aboutMe">{{ data.aboutMe }}</div>
@@ -116,15 +114,17 @@
               <el-col :span="6" v-for="(o, index) in eventData" :key="o" :offset="index > 0 ? 1 : 0">
                 <el-card :body-style="{ padding: '4px' }">
                   <div slot="header" class="clearfix">
-                    <span>Event name</span>
+                    <span>{{o.eventDate.split('T')[0]}}</span>
                   </div>
                   <div style="padding: 14px;">
-                    <p>When: {{o.date}}</p>
                     <p>Created: {{o.createdBy}}</p>
+                    <p>Status: {{o.status}}</p>
+                    <p>{{o.text}}</p>
+                    <a v-if="o.status=='approved'" :href="o.eventLink" target="_blank">Go to meeting</a>
                     <div class="bottom clearfix">
-                      <time class="time">{{ currentDate }}</time>
-                      <el-button type="text" class="button">Approve</el-button>
-                      <el-button type="text" class="button">Deny</el-button>
+                      <!-- <time class="time">{{ currentDate }}</time> -->
+                      <el-button type="text" class="button" v-if="o.status=='pending' && o.mentorID==user.data.uid" @click="updateEvent(o, 'approved')">Approve</el-button>
+                      <el-button type="text" class="button" v-if="o.status=='pending' && o.mentorID==user.data.uid" @click="updateEvent(o, 'denied')">Deny</el-button>
                     </div>
                   </div>
                 </el-card>
@@ -141,9 +141,9 @@
           </div>
           <div
             class="myclass-down"
-            v-if="data.skills && data.skills.length"
+            v-if="data.myClasses && data.myClasses.length"
           >
-            <div class="class-tag" v-for="(c, i) in data.skills" :key="i">
+            <div class="class-tag" v-for="(c, i) in data.myClasses" :key="i">
               {{ c }}
             </div>
           </div>
@@ -167,7 +167,7 @@
           </div>
         </div>
       </div>
-      <div id="comments" class="section content-comments">
+      <!-- <div id="comments" class="section content-comments">
         <div class="comments-upDown">
           <div class="comments-up">
             <h2>Comments</h2>
@@ -181,19 +181,43 @@
             />
           </div>
         </div>
-      </div>
+      </div> -->
 
       <!-- <div v-for="i in [...Array(100)]" :key="i">content</div> -->
       <footer>
         <p>2021 ® All Rights Reserved. Made with ❤</p>
       </footer>
+
+      <el-dialog title="Event Request" :visible.sync="dialogEventVisible">
+        <el-form :model="form">
+          <el-form-item label="Reason">
+            <el-input v-model="form.name" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="Date">
+            <el-select v-model="form.region" placeholder="Please select date">
+              <el-option label="Available every Saturday 20:00-21:00" value="Available every Saturday 20:00-21:00"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogEventVisible = false">Cancel</el-button>
+          <el-button type="primary" @click="onAddEvent()">Confirm</el-button>
+        </span>
+      </el-dialog>
     </div>
   </div>
 </template>
 
 <script>
 import firebase from "firebase";
+import { mapGetters } from "vuex";
 export default {
+  // computed: {
+  //   ...mapGetters({
+  //     user: "user",
+  //     userData: "userData",
+  //   }),
+  // },  
   props: {
     data: Object,
     loggedIn: Boolean,
@@ -206,44 +230,67 @@ export default {
     return {
       defaultPhotoURL:
         "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
-      eventData: {
-        Gb7EwpDbTzXJJnmiSLNN0Y8C8tm2: {
-          date: "2021/08/28",
-          time: "13:00",
-          createdBy: "Altangerel",
-          displayName: "test4"
-        },
-        JtR7FxoFGMhURvIio5qHPn1mhLk1: {
-          date: "2021/08/29",
-          time: "15:00",
-          createdBy: "Jamsrandorj",
-          displayName: "test4"
-        },
-        JtR7FxoFGMhURvIio5qHP1mhLk1: {
-          date: "2021/08/29",
-          time: "15:00",
-          createdBy: "Oyungerel",
-          displayName: "test4"
-        },
-        JtR7FxoFGMURvIio5qHPn1mhLk1: {
-          date: "2021/08/29",
-          time: "15:00",
-          createdBy: "Tuguldur",
-          displayName: "test4"
-        },
-        JtRFxoFGMhURvIio5qHPn1mhLk1: {
-          date: "2021/08/29",
-          time: "15:00",
-          createdBy: "Chimedregzen",
-          displayName: "test4"
-        },
+      // eventData: {
+      //   Gb7EwpDbTzXJJnmiSLNN0Y8C8tm2: {
+      //     date: "2021/08/28",
+      //     time: "13:00",
+      //     createdBy: "Altangerel",
+      //     displayName: "test4"
+      //   },
+      //   JtR7FxoFGMhURvIio5qHPn1mhLk1: {
+      //     date: "2021/08/29",
+      //     time: "15:00",
+      //     createdBy: "Jamsrandorj",
+      //     displayName: "test4"
+      //   },
+      //   JtR7FxoFGMhURvIio5qHP1mhLk1: {
+      //     date: "2021/08/29",
+      //     time: "15:00",
+      //     createdBy: "Oyungerel",
+      //     displayName: "test4"
+      //   },
+      //   JtR7FxoFGMURvIio5qHPn1mhLk1: {
+      //     date: "2021/08/29",
+      //     time: "15:00",
+      //     createdBy: "Tuguldur",
+      //     displayName: "test4"
+      //   },
+      //   JtRFxoFGMhURvIio5qHPn1mhLk1: {
+      //     date: "2021/08/29",
+      //     time: "15:00",
+      //     createdBy: "Chimedregzen",
+      //     displayName: "test4"
+      //   },
+      // },
+      eventData: [],
+      dialogEventVisible: false,
+      form: {
+        name: '',
+        region: '',
+        date1: '',
+        date2: '',
+        delivery: false,
+        type: [],
+        resource: '',
+        desc: ''
       },
+      eventList: true,
+      allEvents: [],
     };
+  },
+  mounted() {
+    this.getAllEvents();
+    console.log(this.eventData);
   },
   computed: {
     currentURL() {
       return window.location.href;
     },
+    ...mapGetters({
+      user: "user",
+      userData: "userData",
+      // eventData: "eventData",
+    }),
   },
   watch: {
     "data.eventList": {
@@ -261,22 +308,83 @@ export default {
         offset: -40,
       });
     },
-    onAddFriend() {
+    onAddEvent() {
       if (!this.loggedIn) return;
-
       let db = firebase.firestore();
+      var date = new Date();
+      var date2 = new Date();
+      date2.setDate(date.getDate() + 7);
+      var event = {
+        eventID: date.toISOString(),
+        mentorID: this.uid,
+        studentID: this.user.data.uid,
+        text: this.form.name,
+        avTime: this.form.region,
+        status: "pending",
+        eventLink: "https://meet.google.com/ekh-bhjg-fxo",
+        eventDate: date2.toISOString(),
+        createdBy: this.user.data.displayName,
+      };
+
       db.collection("aboutMe")
         .doc(this.currentUser.uid)
         .update({
-          eventList: firebase.firestore.FieldValue.arrayUnion(this.uid),
+          eventList: firebase.firestore.FieldValue.arrayUnion(event),
         })
         .then(() => {
           // console.log("add friend success");
-          this.$store.dispatch("fetchUserData");
+          this.$store.dispatch("fetchEventData");
+          this.getAllEvents();
+          this.dialogEventVisible = false;
         })
         .catch(() => {
           // console.error("Error when add friend: " + err.message);
         });
+
+      
+    },
+    //TODO - footer door stick hiih ***
+    //TODO - event card goy yanzlah (like unread comments section) ***
+    //TODO - textinput to textarea with at least 3 rows ***
+    //TODO - change date dropdown to just text ***
+    //TODO - date picker oruulah, value-g ni eventDate-d hadgalah (nice to have)
+
+    updateEvent(event, status) {
+      if (!this.loggedIn) return;
+
+      let db = firebase.firestore();
+      event.status = status;
+      db.collection("aboutMe")
+        .doc(event.studentID)
+        .get()
+        .then((x) => {
+          var currentEvents = x.data().eventList;
+          currentEvents.filter(k => k.eventID == event.eventID);
+          for (var i in currentEvents) {
+            if (currentEvents[i].eventID == event.eventID) {
+                currentEvents[i].status = status;
+                break; //Stop this loop, we found it!
+            }
+          }
+          db.collection("aboutMe")
+            .doc(event.studentID)
+            .update({
+              eventList: currentEvents,
+            })
+            .then(() => {
+              // console.log("add friend success");
+              this.$store.dispatch("fetchEventData");
+            })
+            .catch(() => {
+              // console.error("Error when add friend: " + err.message);
+            });
+          this.$store.dispatch("fetchEventData");
+        })
+        .catch(() => {
+          // console.error("Error when add friend: " + err.message);
+        });
+
+      
     },
     onUnfriend() {
       if (!this.loggedIn) return;
@@ -296,18 +404,61 @@ export default {
         });
     },
     fetcheventList() {
-      // if (!this.data.eventList) return;
+      if (!this.data.eventList) return;
 
-      // let db = firebase.firestore();
-      // this.data.eventList.forEach(uid => {
-      //   let docRef = db.collection("aboutMe").doc(uid);
-      //   docRef.get().then(doc => {
-      //     if (doc.exists) {
-      //       this.$set(this.friendData, uid, doc.data());
-      //     }
-      //   });
-      // });
-      console.log(this.friendData);
+      let db = firebase.firestore();
+      this.data.eventList.forEach(uid => {
+        let docRef = db.collection("aboutMe").doc(uid);
+        docRef.get().then(doc => {
+          if (doc.exists) {
+            this.$set(this.friendData, uid, doc.data());
+          }
+        });
+      });
+      console.log(this.eventList);
+    },
+    getAllEvents() {
+      console.log("test");
+      let db = firebase.firestore();
+      let ref = db.collection("aboutMe");
+
+      // const docRef = doc(db, "aboutMe");
+      // const citiesRef = collection(db, "aboutMe");
+      // const docSnap = getDoc(docRef);
+      // console.log(citiesRef);
+
+      // if (docSnap.exists()) {
+      //   console.log("Document data:", docSnap.data());
+      // } else {
+      //   // doc.data() will be undefined in this case
+      //   console.log("No such document!");
+      // }
+      console.log(this.data);
+      console.log(this.eventData);
+      
+      ref
+        .get()
+        .then(querySnapshot => {
+          // this.allEvents = querySnapshot.docs.map(doc => (
+          //   doc.eventList
+          // ));
+          console.log("event entered");
+          querySnapshot.docs.forEach(x => {
+            var temp = x.data();
+            if(temp.eventList){
+              this.eventData = [...this.eventData, ...temp.eventList];
+            }
+            console.log(x.data())
+          });
+          // console.log(querySnapshot.docs.map(doc => (
+          //   doc.eventList
+          // )));
+        })
+        .catch(error => {
+          console.log("Error getting documents: ", error);
+        });
+
+      // console.log(allEvents);
     },
   },
 };
@@ -333,7 +484,7 @@ export default {
   .menu-top {
     padding: 20px;
     text-align: left;
-    background: #fca9d0;
+    background: #fff;
     border-bottom-right-radius: 50px;
     .profile-wrapper {
       border-radius: 50%;
@@ -447,7 +598,7 @@ export default {
       font-size: 22px;
       // font-family: "Carter One", cursive;
       // font-family: "Leckerli One", cursive;
-      font-family: "McLaren", cursive;
+      // font-family: "McLaren", cursive;
     }
   }
 
@@ -493,13 +644,13 @@ export default {
       min-height: 200px;
       max-height: 300px;
       line-height: 1.5;
-      font-family: "Kalam", cursive;
+      //font-family: "Kalam", cursive;
       font-size: 20px;
       h2 {
         margin: 0 0 14px;
         font-size: 36px;
-        color: #ff037b;
-        font-family: "Gaegu", cursive;
+        color: #0B4EDD;
+        //font-family: "Gaegu", cursive;
       }
     }
   }
@@ -540,7 +691,7 @@ export default {
         color: #000;
         margin: 10px;
         border-radius: 4px;
-        font-family: "Boogaloo", cursive;
+        //font-family: "Boogaloo", cursive;
         font-size: 20px;
       }
     }
