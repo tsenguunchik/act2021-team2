@@ -1,25 +1,9 @@
 <template>
-  <div id="app">
-    <router-view />
-  </div>
+    <router-view></router-view>
 </template>
 
-<style lang="scss">
-#app {
-  //font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  height: 100vh;
-  > * {
-    height: 100vh;
-    position: relative;
-  }
+<script>
+export default {
+  name: 'App'
 }
-body {
-  // background-image: url('../src/assets/uni.jpg');
-  background-repeat: no-repeat;
-  background-size: auto;
-  background-size: 100% 100%;
-  word-break: break-word;
-}
-</style>
+</script>

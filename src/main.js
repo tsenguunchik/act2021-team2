@@ -1,9 +1,10 @@
 import "modern-normalize/modern-normalize.css";
 import Vue from "vue";
 // import Vuetify from 'vuetify'
-import ElementUI from "element-ui";
+import vuetify from './plugins/vuetify'
+// import ElementUI from "element-ui";
 // import "vuetify/dist/vuetify.min.css";
-import "element-ui/lib/theme-chalk/index.css";
+// import "element-ui/lib/theme-chalk/index.css";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
@@ -13,7 +14,7 @@ import VueScrollTo from "vue-scrollto";
 import VueDisqus from "vue-disqus";
 
 // Vue.use(Vuetify);
-Vue.use(ElementUI);
+// Vue.use(ElementUI);
 Vue.use(VueScrollTo);
 Vue.use(VueDisqus);
 
@@ -44,7 +45,15 @@ firebase.auth().onAuthStateChanged(user => {
     app = new Vue({
       router,
       store,
+      vuetify,
       render: h => h(App),
     }).$mount("#app");
   }
 });
+
+// new Vue({
+//   router,
+//   store,
+//   vuetify,
+//   render: h => h(App)
+// }).$mount('#app')

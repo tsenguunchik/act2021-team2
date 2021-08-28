@@ -1,6 +1,91 @@
 <template>
   <header class="header">
-    <router-link to="/">
+    <v-app-bar
+      color="deep-purple accent-4"
+      dark
+    >
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+
+      <v-toolbar-title>
+        <router-link to="/" tag="span" style="cursor: pointer">
+          {{ appTitle }}
+        </router-link>
+      </v-toolbar-title>
+
+      <v-spacer></v-spacer>
+
+      <div class="logged-in" v-if="user.loggedIn">
+        <router-link class="profile-wrapper" :to="`/user/${user.data.uid}`">
+          <div class="name" v-if="user.data.displayName">
+            {{ user.data.displayName }}
+          </div>
+          <v-avatar
+            :color="$vuetify.breakpoint.smAndDown ? 'grey darken-3' : 'transparent'"
+            size="32"
+          ></v-avatar>
+
+          <el-avatar
+            size="large"
+            :src="
+              user.data.photoURL ||
+                'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
+            "
+          />
+        </router-link>
+        <el-dropdown trigger="click" @command="dropDownClick">
+          <i class="el-icon-more" />
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item class="link">
+              <router-link to="/setting">Setting</router-link>
+            </el-dropdown-item>
+            <el-dropdown-item divided command="logout">Logout</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
+      <div v-else class="visiter">
+        <router-link class="login" to="/login">LOGIN</router-link>
+        <router-link class="signUp" to="/sign-up">SIGN UP</router-link>
+      </div>
+
+      <v-btn icon>
+        <v-icon>mdi-dots-vertical</v-icon>
+      </v-btn>
+    </v-app-bar>
+
+    <v-navigation-drawer
+      v-model="drawer"
+      absolute
+      bottom
+      temporary
+    >
+      <v-list
+        nav
+        dense
+      >
+        <v-list-item-group
+          v-model="group"
+          active-class="deep-purple--text text--accent-4"
+        >
+          <v-list-item>
+            <v-list-item-title>Foo</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-title>Bar</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-title>Fizz</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-title>Buzz</v-list-item-title>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
+
+    <!-- <router-link to="/">
       <img src="../assets/amsa.png" class="logo">
     </router-link>
     <h1>Amsa Guide</h1>
@@ -33,7 +118,7 @@
         <router-link class="login" to="/login">LOGIN</router-link>
         <router-link class="signUp" to="/sign-up">SIGN UP</router-link>
       </div>
-    </div>
+    </div> -->
   </header>
 </template>
 
@@ -41,6 +126,18 @@
 import firebase from "firebase";
 import { mapGetters } from "vuex";
 export default {
+  data(){
+    return {
+      appTitle: 'Amsa Guide',
+      drawer: false,
+      group: null,
+    }
+  },
+  watch: {
+    group () {
+      this.drawer = false
+    },
+  },
   computed: {
     ...mapGetters({
       user: "user",
@@ -69,106 +166,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.header {
-  height: 64px;
-  background: #3F51B5;
-  // #fdf2f0
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 1.5rem;
-
-  a {
-    text-decoration: none;
-  }
-  h1 {
-    margin: 0;
-    color: #fff;
-    //font-family: "Architects Daughter", cursive;
-    // font-family: "Carter One", cursive;
-    // text-shadow: 2px 2px 0px #fff, 5px 4px 0px rgba(0, 0, 0, 0.15);
-  }
-}
-
-.logo {
-  width: 50px;
-}
-
-.right {
-  .logged-in {
-    display: flex;
-    align-items: center;
-    margin-right: -8px;
-  }
-  .profile-wrapper {
-    display: flex;
-    align-items: center;
-    border-radius: 4px;
-    padding: 5px;
-    transition: all 0.4s;
-    color: inherit;
-    &:hover {
-      background: #eee;
-    }
-    .name {
-      color: #fff;
-      margin: 10px;
-      font-size: 18px;
-      font-weight: bold;
-    }
-  }
-  .el-dropdown {
-    i {
-      font-size: 1.5rem;
-      padding: 13px;
-      border-radius: 4px;
-      &:hover {
-        background: #eee;
-      }
-    }
-    cursor: pointer;
-  }
-  .visiter {
-    a {
-      color: #409EFF;
-      background: #fff;
-      padding: 9px 12px;
-      border-radius: 4px;
-      border: 1px solid #409EFF;
-      font-size: 16px;
-      line-height: 16px;
-      transition: all 0.3s;
-      display: inline-block;
-      // font-weight:
-      &:not(:last-child) {
-        margin-right: 1rem;
-      }
-      &:hover {
-        color: #fff;
-        background: #9fcfff;
-      }
-      &.signUp {
-        color: #fff;
-        background: #409EFF;
-        border-color: transparent;
-        &:hover {
-          background: #70b8ff;
-        }
-      }
-    }
-  }
-}
-.link {
-  padding: 0;
-  a {
-    display: block;
-    height: 100%;
-    width: 100%;
-    text-decoration: none;
-    color: inherit;
-    padding: 0 20px;
-  }
-}
-</style>
