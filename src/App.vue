@@ -6,7 +6,7 @@
 
 <style lang="scss">
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  //font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100vh;
@@ -16,7 +16,7 @@
   }
 }
 body {
-  background-image: url('../src/assets/uni.jpg');
+  // background-image: url('../src/assets/uni.jpg');
   background-repeat: no-repeat;
   background-size: auto;
   background-size: 100% 100%;

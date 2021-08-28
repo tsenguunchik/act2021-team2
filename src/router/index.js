@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import firebase from "firebase";
 import Home from "../views/Home.vue";
+import NotFound from "../views/NotFound.vue";
 import Login from "../views/Login.vue";
 import SignUp from "../views/SignUp.vue";
 import UserContainer from "../views/UserContainer.vue";
@@ -45,6 +46,11 @@ const routes = [
     meta: {
       requiresAuth: true,
     },
+  },
+  {
+    path: "*",
+    name: "Not Found",
+    component: NotFound,
   },
 ];
 

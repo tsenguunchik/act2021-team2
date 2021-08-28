@@ -2,8 +2,8 @@
   <header class="header">
     <router-link to="/">
       <img src="../assets/amsa.png" class="logo">
-      <!-- <h1>Amsa Guide</h1> -->
     </router-link>
+    <h1>Amsa Guide</h1>
 
     <div class="right" v-if="!user.loading">
       <div class="logged-in" v-if="user.loggedIn">
@@ -85,10 +85,10 @@ export default {
   }
   h1 {
     margin: 0;
-    color: #fc4c92;
-    font-family: "Architects Daughter", cursive;
+    color: #fff;
+    //font-family: "Architects Daughter", cursive;
     // font-family: "Carter One", cursive;
-    text-shadow: 2px 2px 0px #fff, 5px 4px 0px rgba(0, 0, 0, 0.15);
+    // text-shadow: 2px 2px 0px #fff, 5px 4px 0px rgba(0, 0, 0, 0.15);
   }
 }
 
@@ -113,6 +113,7 @@ export default {
       background: #eee;
     }
     .name {
+      color: #fff;
       margin: 10px;
       font-size: 18px;
       font-weight: bold;
@@ -131,11 +132,11 @@ export default {
   }
   .visiter {
     a {
-      color: #fc4c92;
+      color: #409EFF;
       background: #fff;
       padding: 9px 12px;
       border-radius: 4px;
-      border: 1px solid #fc4c92;
+      border: 1px solid #409EFF;
       font-size: 16px;
       line-height: 16px;
       transition: all 0.3s;
@@ -146,14 +147,14 @@ export default {
       }
       &:hover {
         color: #fff;
-        background: #f3bfd4;
+        background: #9fcfff;
       }
       &.signUp {
         color: #fff;
-        background: #fc4c92;
+        background: #409EFF;
         border-color: transparent;
         &:hover {
-          background: #ff76ad;
+          background: #70b8ff;
         }
       }
     }

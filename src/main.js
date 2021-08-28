@@ -1,6 +1,8 @@
 import "modern-normalize/modern-normalize.css";
 import Vue from "vue";
+// import Vuetify from 'vuetify'
 import ElementUI from "element-ui";
+// import "vuetify/dist/vuetify.min.css";
 import "element-ui/lib/theme-chalk/index.css";
 import App from "./App.vue";
 import router from "./router";
@@ -10,6 +12,7 @@ import Loading from "./components/Loading";
 import VueScrollTo from "vue-scrollto";
 import VueDisqus from "vue-disqus";
 
+// Vue.use(Vuetify);
 Vue.use(ElementUI);
 Vue.use(VueScrollTo);
 Vue.use(VueDisqus);

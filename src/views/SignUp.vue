@@ -3,11 +3,6 @@
     <Header />
 
     <div class="sign-up-body">
-      <div class="body-left">
-        <div>AMSA</div>
-        <div>GUIDE</div>
-      </div>
-
       <el-card class="body-right">
         <h3>Let's create your account!</h3>
         <form @submit.prevent="signUp">
@@ -28,7 +23,7 @@
           <el-radio v-model="role" label="mentor">Mentor</el-radio>
           <el-radio v-model="role" label="student">Student</el-radio>
           <br />
-          <el-button @click="signUp" type="danger">SIGN UP</el-button>
+          <el-button @click="signUp" type="primary">SIGN UP</el-button>
         </form>
         <span>
           Or go back to login
@@ -122,8 +117,8 @@ export default {
 .body-left {
   margin-right: 200px;
   font-size: 100px;
-  color: #fc4c92;
-  font-family: Waiting for the Sunrise;
+  color: #E94331;
+  //font-family: Waiting for the Sunrise;
   font-weight: bold;
   text-shadow: 0px 0px 0 rgb(232, 56, 126), -1px 0px 0 rgb(225, 49, 119),
     -2px 0px 0 rgb(219, 43, 113), -3px 0px 0 rgb(213, 37, 107),
