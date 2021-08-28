@@ -25,3 +25,9 @@ npm run build
 ```
 npm run lint
 ```
+
+### Deploy
+
+```
+firebase deploy --only hosting
+```
