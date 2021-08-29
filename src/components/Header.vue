@@ -19,19 +19,44 @@
           <div class="name" v-if="user.data.displayName">
             {{ user.data.displayName }}
           </div>
-          <v-avatar
-            :color="$vuetify.breakpoint.smAndDown ? 'grey darken-3' : 'transparent'"
-            size="32"
-          ></v-avatar>
-
-          <el-avatar
-            size="large"
-            :src="
+          <v-list-item-avatar>
+            <img
+              :src="
               user.data.photoURL ||
                 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
-            "
-          />
+              "
+              alt="John"
+            >
+          </v-list-item-avatar>
         </router-link>
+        <v-menu
+          left
+          bottom
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              icon
+              v-bind="attrs"
+              v-on="on"
+            >
+              <v-icon>mdi-dots-vertical</v-icon>
+            </v-btn>
+          </template>
+
+          <v-list>
+            <v-list-item
+              to="/setting"
+            >
+              <v-list-item-title>Setting</v-list-item-title>
+            </v-list-item>
+            <v-list-item
+              divided
+              command="logout"
+            >
+              <v-list-item-title>Logout</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
         <el-dropdown trigger="click" @command="dropDownClick">
           <i class="el-icon-more" />
           <el-dropdown-menu slot="dropdown">
