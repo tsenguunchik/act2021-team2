@@ -2,6 +2,12 @@
 
 Helps Mongolian students to connect with abroad Mongolian students and workers. And get some advices including wide range of topics.
 
+## Online Demo
+
+https://amsa-guide.online/
+
+![screenshot](screenshot.png)
+
 ## Project setup
 
 ```
