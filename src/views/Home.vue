@@ -33,9 +33,9 @@
         </router-link>
       </div>
     </section>
-    <footer>
+    <!-- <footer>
       <p>2021 ® All Rights Reserved. Made with ❤</p>
-    </footer>
+    </footer> -->
   </div>
 </template>
 
